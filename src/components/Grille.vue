@@ -3,24 +3,32 @@
         <Affiche
             v-for="(movie, index) in movies"
             :key="index"
-            :title="movie.title"
-            :src="movie.poster"
+            :movie="movie"
+            :selectMovie="selectMovie"
         >
         </Affiche>
+        <Popup
+        v-if="selectedMovie"
+        :movie ="selectedMovie"
+        :deselectMovie="deselectMovie"
+        />
     </main>
 </template>
 
 <script>
 import Affiche from './Affiche.vue'
+import Popup from './Popup.vue'
 
 export default {
     name:'Grille',
     components: {
-        Affiche
+        Affiche,
+        Popup
   },
   data () {
       return {
-        movies: null
+        movies: null,
+        selectedMovie: null
       }
     },
     async created (){
@@ -30,6 +38,15 @@ export default {
             this.movies = mov
         } catch (error){
             console.error(error);
+        }
+    },
+    methods: {
+        selectMovie (movie){
+            this.selectedMovie = movie
+        },
+        deselectMovie (){
+             this.selectedMovie = null
+            console.log("hello")
         }
     }  
 }
