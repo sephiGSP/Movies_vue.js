@@ -13,8 +13,13 @@
 export default {
     name: 'Popup',
     props: {
-        movie: {type: Object, required: true},
-        deselectMovie: Function
+        movie: {type: Object, required: true}
+    },
+    methods: {
+        deselectMovie(){
+            this.$emit('deselectMovie')
+            console.log('hello there')
+        }
     }
 }
 </script>

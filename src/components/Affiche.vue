@@ -10,7 +10,11 @@ export default {
   name: 'Affiche',
   props:{
       movie: Object,
-      selectMovie: Function
+  },
+  methods: {
+      selectMovie(){
+          this.$emit('selectMovie', this.movie)
+      }
   }
 }
 </script>
@@ -29,6 +33,9 @@ div{
         border: 6px solid #2b17d8;
         transform-origin: top 0 left 0;
         transform: scale(1.25);
+    }
+    p{
+        flex-wrap: wrap;
     }
 }
     

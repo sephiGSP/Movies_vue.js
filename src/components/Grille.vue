@@ -4,13 +4,13 @@
             v-for="(movie, index) in movies"
             :key="index"
             :movie="movie"
-            :selectMovie="selectMovie"
+            @selectMovie="selectMovie"
         >
         </Affiche>
         <Popup
         v-if="selectedMovie"
         :movie ="selectedMovie"
-        :deselectMovie="deselectMovie"
+        @deselectMovie="deselectMovie"
         />
     </main>
 </template>
@@ -46,7 +46,6 @@ export default {
         },
         deselectMovie (){
              this.selectedMovie = null
-            console.log("hello")
         }
     }  
 }
