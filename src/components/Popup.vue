@@ -1,24 +1,28 @@
 <template>
     <div class="backPop">
         <div class="popup">
-            <h3>{{movie.title}}</h3>
-            <img :src="movie.poster"/>
-            <p>{{movie.desc}}</p>
+            <h3>{{moviesState.selectedMovie.title}}</h3>
+            <img :src="moviesState.selectedMovie.poster"/>
+            <p>{{moviesState.selectedMovie.desc}}</p>
             <button @click="deselectMovie()" type="button">Fermer</button>
         </div>
     </div>
 </template>
 
 <script>
+import {moviesState} from '../states/movies-state'
+
 export default {
     name: 'Popup',
-    props: {
-        movie: {type: Object, required: true}
+    data () {
+      return {
+        moviesState
+      }
     },
     methods: {
         deselectMovie(){
-            this.$emit('deselectMovie')
-            console.log('hello there')
+            console.log('hello')
+            this.moviesState.selectedMovie = null 
         }
     }
 }

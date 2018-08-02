@@ -1,19 +1,26 @@
 <template>
     <div>
-        <img @click="selectMovie(movie)" :src="movie.poster"/>
+        <img @click="selectMovie()" :src="movie.poster"/>
         <p>{{movie.title}}</p>
     </div>
 </template>
 
 <script>
+import {moviesState} from '../states/movies-state'
+
 export default {
   name: 'Affiche',
   props:{
       movie: Object,
   },
+  data () {
+      return {
+        moviesState
+      }
+    },
   methods: {
       selectMovie(){
-          this.$emit('selectMovie', this.movie)
+         this.moviesState.selectedMovie = this.movie 
       }
   }
 }
@@ -22,6 +29,9 @@ export default {
 <style lang="less" scoped>
 div{
     margin: 10px;
+    height: 460px;
+    width: 300px;
+    word-wrap: break-word;
     img{
         border-radius: 10px;
         height: 400px;
@@ -33,9 +43,6 @@ div{
         border: 6px solid #2b17d8;
         transform-origin: top 0 left 0;
         transform: scale(1.25);
-    }
-    p{
-        flex-wrap: wrap;
     }
 }
     

@@ -1,16 +1,13 @@
 <template>
     <main>
         <Affiche
-            v-for="(movie, index) in movies"
+            v-for="(movie, index) in moviesState.movies"
             :key="index"
             :movie="movie"
-            @selectMovie="selectMovie"
         >
         </Affiche>
         <Popup
-        v-if="selectedMovie"
-        :movie ="selectedMovie"
-        @deselectMovie="deselectMovie"
+        v-if="moviesState.selectedMovie"
         />
     </main>
 </template>
@@ -18,6 +15,7 @@
 <script>
 import Affiche from './Affiche.vue'
 import Popup from './Popup.vue'
+import {moviesState} from '../states/movies-state'
 
 export default {
     name:'Grille',
@@ -27,29 +25,19 @@ export default {
   },
   data () {
       return {
-        movies: null,
-        selectedMovie: null
+        moviesState
       }
     },
     async created (){
         try{
             let response = await fetch("movies.json")
             const mov = await response.json()
-            this.movies = mov
+            this.moviesState.movies = mov
         } catch (error){
             console.error(error);
         }
-    },
-    methods: {
-        selectMovie (movie){
-            this.selectedMovie = movie
-        },
-        deselectMovie (){
-             this.selectedMovie = null
-        }
     }  
 }
-
 </script>
 
 <style lang="less" scoped>
