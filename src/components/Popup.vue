@@ -19,10 +19,21 @@ export default {
         moviesState
       }
     },
+    created(){
+        document.addEventListener('keypress', this.closePopup)
+    },
+    beforeDestroy(){
+        document.removeEventListener('keypress', this.closePopup)
+    },
     methods: {
         deselectMovie(){
-            console.log('hello')
             this.moviesState.selectedMovie = null 
+        },
+        closePopup(event){
+            console.log(event.key)
+            if (event.key == 'Escape'){
+                this.moviesState.selectedMovie = null
+            }
         }
     }
 }
