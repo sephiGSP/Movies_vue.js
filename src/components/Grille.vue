@@ -9,30 +9,39 @@
         <Popup
         v-if="moviesState.selectedMovie"
         />
+        <Loader
+        v-if="load.value"/>
     </main>
 </template>
 
 <script>
 import Affiche from './Affiche.vue'
 import Popup from './Popup.vue'
+import Loader from './Loader.vue'
 import {moviesState} from '../states/movies-state'
 
 export default {
     name:'Grille',
     components: {
         Affiche,
-        Popup
+        Popup,
+        Loader
   },
   data () {
       return {
-        moviesState
-      }
+        moviesState,
+        load: {
+            value: false
+            }
+        }
     },
     async created (){
         try{
-            let response = await fetch("movies.json")
+            this.load.value = true
+            let response = await fetch("http://localhost:5000/movies")
             const mov = await response.json()
             this.moviesState.movies = mov
+            this.load.value = false
         } catch (error){
             console.error(error);
         }

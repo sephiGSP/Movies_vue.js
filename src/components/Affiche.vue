@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loader v-if="load.value"/>
         <img @click="selectMovie()" :src="movie.poster"/>
         <p>{{movie.title}}</p>
     </div>
@@ -7,27 +8,43 @@
 
 <script>
 import {moviesState} from '../states/movies-state'
+import Loader from './Loader.vue'
 
 export default {
   name: 'Affiche',
+  components: {
+      Loader
+  },
   props:{
       movie: Object,
   },
   data () {
       return {
-        moviesState
+        moviesState,
+        load: {
+            value: false
+        }
       }
     },
   methods: {
-      selectMovie(){
-         this.moviesState.selectedMovie = this.movie 
-      }
+     async selectMovie(){
+        try{
+            this.load.value = true
+            let response = await fetch("http://localhost:5000/movies/" + this.movie.id)
+            const movie = await response.json()
+            this.moviesState.selectedMovie = movie
+            this.load.value = false 
+        } catch (error){
+            console.error(error);
+        }      }
   }
 }
 </script>
 
 <style lang="less" scoped>
 div{
+    position: relative;
+    padding: 10px;
     margin: 10px;
     height: 460px;
     width: 300px;

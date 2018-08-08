@@ -19,13 +19,16 @@ export default {
         moviesState
       }
     },
+    //a la creation de la popup on crée un evenement qui la ferme en cas de pression sur la touche "Esc"
     created(){
         document.addEventListener('keypress', this.closePopup)
     },
+    //avant la fermeture de la popup on retire l'ecoute de l'evenement
     beforeDestroy(){
         document.removeEventListener('keypress', this.closePopup)
     },
     methods: {
+        //methodes qui met selectedMovie a null a la fermeture de la popup
         deselectMovie(){
             this.moviesState.selectedMovie = null 
         },
