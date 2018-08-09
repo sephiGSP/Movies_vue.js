@@ -1,5 +1,5 @@
 <template>
-    <div class="backPop">
+    <div id="backPop">
         <div class="popup">
             <h3>{{moviesState.selectedMovie.title}}</h3>
             <img :src="moviesState.selectedMovie.poster"/>
@@ -37,25 +37,24 @@ export default {
             if (event.key == 'Escape'){
                 this.moviesState.selectedMovie = null
             }
-        }
+        },
     }
 }
 </script>
 
 <style lang="less" scoped>
-.backPop{
+#backPop{
     top: 0;
-    left: 0;
-    height: 300vh;
-    width: 300vh;
-    position: fixed;
+    left: 100vw;
+    bottom: 0;
+    width: 100vw;
+    position: absolute;
     background-color: rgba(188,183,183,0.75);
     .popup{
         background-color: #17181b;
         height: 52vh;
         width: 100vh;
         margin-left: 50vh;
-        margin-top: 20vh;
         box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
         h3{
             color: white;

@@ -6,9 +6,6 @@
             :movie="movie"
         >
         </Affiche>
-        <Popup
-        v-if="moviesState.selectedMovie"
-        />
         <Loader
         v-if="load.value"/>
     </main>
@@ -16,17 +13,14 @@
 
 <script>
 import Affiche from './Affiche.vue'
-import Popup from './Popup.vue'
 import Loader from './Loader.vue'
 import {moviesState} from '../states/movies-state'
 
 export default {
     name:'Grille',
     components: {
-        Affiche,
-        Popup,
-        Loader
-  },
+        Affiche
+    },
   data () {
       return {
         moviesState,
@@ -45,12 +39,17 @@ export default {
         } catch (error){
             console.error(error);
         }
-    }  
+    }
 }
 </script>
 
 <style lang="less" scoped>
 main{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
     height: 85vh;
     flex-grow: 1;
     overflow: scroll;
