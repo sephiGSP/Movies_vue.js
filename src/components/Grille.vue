@@ -19,7 +19,8 @@ import {moviesState} from '../states/movies-state'
 export default {
     name:'Grille',
     components: {
-        Affiche
+        Affiche,
+        Loader
     },
   data () {
       return {

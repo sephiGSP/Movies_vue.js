@@ -6,6 +6,7 @@
             <li><a href="#" title="aller à la section 2">Prochaines Sorties</a></li>
             <li><a href="#" title="aller à la section 3">Films les mieux notés</a></li>
             <li><a href="#" title="aller à la section 5">Contact</a></li>
+            <li><router-link to="/form">Ajouter un film</router-link></li>
         </ul>
     </header>
 </template>
