@@ -11,6 +11,9 @@
             <textarea v-model="desc" rows="20" cols="60"></textarea><br>
             <input type='submit' value="Envoyer"/>
         </form>
+        <div class="errors" v-if="errors">
+            <p v-for="(error, i) in errors" :key="i">{{error}}</p>
+        </div>
     </div>
 </template>
 
@@ -30,6 +33,7 @@ export default {
         title: null,
         poster: null,
         desc: null,
+        errors: null,
         load: {
             value: false
         }
@@ -38,38 +42,35 @@ export default {
     methods:{
         checkForm:  async function (e) {
             try {
-                if (this.title && this.poster && this.desc) {
                 this.load.value = true
                 console.log(this.title + " " + this.poster + " " + this.desc)
-                await fetch ("http://localhost:5000/form", {
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify({title: this.title, poster: this.poster, desc: this.desc})
-            })
-            this.load.value = false
-            this.$router.push({ name: "grille"})
-        }
-      
-        this.errors = [];
-      
-        if (!this.title) {
-            this.errors.push('Titre requis.');
-        }
-        if (!this.poster) {
-            this.errors.push("Url de l'affiche requis");
-        }
-        if (!this.desc) {
-            this.errors.push('Synopsis requis');
-        }
-      
-        e.preventDefault();
-        } catch (error){
-            console.log(error)
-        }
-    },
-  }
+                const reponse = await fetch ("http://localhost:5000/form", {
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({title: this.title, poster: this.poster, desc: this.desc})
+                })
+                if (!reponse.ok){
+                    if (reponse.status === 400){
+                        this.load.value= false
+                        this.errors = await reponse.json()
+                    }else{
+                        this.load.value= false
+                        this.errors = ['Une erreur est survenue']
+                    }
+                    
+                } else {
+                    this.load.value= false
+                    this.$router.push({ name: "grille"})
+                }
+                    
+            } catch (error){
+                this.load.value= false
+                this.errors = ['Une erreur est survenue']
+            }
+        },
+    }
 }
 </script>
 
@@ -80,6 +81,12 @@ export default {
     }
     input{
         margin-top: 5px;
+    }
+    .errors{
+        color: red;
+        position: absolute;
+        top: 50vh;
+        left: 20vh;
     }
 </style>
 
